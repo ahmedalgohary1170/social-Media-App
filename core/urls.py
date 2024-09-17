@@ -1,5 +1,6 @@
 from django.urls import path
-from . import views
+from . import views , api
+
 urlpatterns = [
     path('', views.index, name='index'),
     path('settings', views.settings,name='settings'),
@@ -11,5 +12,9 @@ urlpatterns = [
     path('signup', views.signup,name='signup'),
     path('signin', views.signin,name='signin'),
     path('logout', views.logout,name='logout'),
+    
+    # api
+    path('api/posts',api.PostList.as_view()),
+    path('api/posts/<str:pk>',api.PostDetail.as_view())
 
 ]
