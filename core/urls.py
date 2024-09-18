@@ -15,6 +15,8 @@ urlpatterns = [
     
     # api
     path('api/posts',api.PostList.as_view()),
-    path('api/posts/<str:pk>',api.PostDetail.as_view())
+    path('api/posts/<str:pk>',api.PostDetail.as_view()),
+    path('api/users',api.UserList.as_view()),
+    
 
 ]
