@@ -4,6 +4,7 @@ from rest_framework.routers import DefaultRouter
 
 router = DefaultRouter()
 router.register('api/users', api.UserViewsets, basename='api/users')
+router.register('posts', api.PostViewsets, basename='posts')
 
 
 urlpatterns = [
@@ -19,8 +20,8 @@ urlpatterns = [
     path('logout', views.logout,name='logout'),
     
     # api
-    path('api/posts',api.PostList.as_view()),
-    path('api/posts/<str:pk>',api.PostDetail.as_view()),
+    # path('api/posts',api.PostList.as_view()),
+    # path('api/posts/<str:pk>',api.PostDetail.as_view()),
     # path('api/users',api.UserList.as_view()),
     
 

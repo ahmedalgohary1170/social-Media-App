@@ -3,15 +3,15 @@ from .models import Post, Profile
 from .Serializer import Postserializer , ProfileSerializer
 
 
-class PostList(generics.ListCreateAPIView):
+class PostViewsets(viewsets.ModelViewSet):
     
     queryset = Post.objects.all()
     serializer_class = Postserializer
     
-class PostDetail(generics.RetrieveAPIView):
+# class PostDetail(generics.RetrieveAPIView):
     
-    queryset = Post.objects.all()
-    serializer_class = Postserializer
+#     queryset = Post.objects.all()
+#     serializer_class = Postserializer
 
 
 
