@@ -27,7 +27,6 @@ def index(request):
         
     feed_list = list(chain(*feed))
     
-    
     # add suggestions
     all_users = User.objects.all()
     user_following_all = []
@@ -36,24 +35,33 @@ def index(request):
         user_list = User.objects.get(username=user.user) 
         user_following_all.append(user_list)
         
-        new_suggestions_list = [x for x in list(all_users) if (x not in list(user_following_all))]
-        current_user = User.objects.filter(username=request.user.username) 
-        finale_suggestions_all =[x for x in list(new_suggestions_list) if (x not in list(current_user))]   
+    new_suggestions_list = [x for x in list(all_users) if (x not in list(user_following_all))]
+    current_user = User.objects.filter(username=request.user.username) 
+    finale_suggestions_all = [x for x in list(new_suggestions_list) if (x not in list(current_user))]   
 
-        random.shuffle(finale_suggestions_all)
-        
-        username_profile = []
-        username_profile_list = []
-        for users in finale_suggestions_all:
-            username_profile.append(users.id)
-        
-        for ids in username_profile:
-            profile_lists = Profile.objects.filter(id_user=ids)
-            username_profile_list.append(profile_lists)
-        
-        
-        suggestions_username_profile_list = list(chain(*username_profile_list))  
-    return render(request,'index.html',{"profile_object":profile_object , "posts":feed_list,'suggestions_username_profile_list':suggestions_username_profile_list[:4]})
+    random.shuffle(finale_suggestions_all)
+    
+    username_profile = []
+    username_profile_list = []
+
+    for users in finale_suggestions_all:
+        username_profile.append(users.id)
+    
+    for ids in username_profile:
+        profile_lists = Profile.objects.filter(user__id=ids)
+        username_profile_list.append(profile_lists)
+    
+    # Always define suggestions_username_profile_list, even if the loop doesn't run
+    suggestions_username_profile_list = []
+    
+    if username_profile_list:
+        suggestions_username_profile_list = list(chain(*username_profile_list))
+    
+    return render(request, 'index.html', {
+        "profile_object": profile_object, 
+        "posts": feed_list, 
+        'suggestions_username_profile_list': suggestions_username_profile_list[:4]
+    })
 
 
 

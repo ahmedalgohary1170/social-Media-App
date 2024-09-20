@@ -1,5 +1,10 @@
 from django.urls import path
 from . import views , api
+from rest_framework.routers import DefaultRouter
+
+router = DefaultRouter()
+router.register('api/users', api.UserViewsets, basename='api/users')
+
 
 urlpatterns = [
     path('', views.index, name='index'),
@@ -16,7 +21,9 @@ urlpatterns = [
     # api
     path('api/posts',api.PostList.as_view()),
     path('api/posts/<str:pk>',api.PostDetail.as_view()),
-    path('api/users',api.UserList.as_view()),
+    # path('api/users',api.UserList.as_view()),
     
 
 ]
+
+urlpatterns += router.urls

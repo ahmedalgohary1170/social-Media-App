@@ -1,4 +1,4 @@
-from rest_framework import generics
+from rest_framework import generics,viewsets
 from .models import Post, Profile
 from .Serializer import Postserializer , ProfileSerializer
 
@@ -15,7 +15,7 @@ class PostDetail(generics.RetrieveAPIView):
 
 
 
-class UserList(generics.ListCreateAPIView):
-    
+class UserViewsets(viewsets.ModelViewSet):
+
     queryset = Profile.objects.all()
     serializer_class = ProfileSerializer
